@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -14,19 +14,19 @@ const App = () => {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <Router>
-      <div className="app">
-        {isAuthenticated && <Sidebar />}
-        <Routes>
-          <Route path="/" element={<PrivateRoute element={<Home />} />} />
-          <Route path="/add-employee" element={<PrivateRoute element={<AddEmployee />} />} />
-          <Route path="/employee-list" element={<PrivateRoute element={<EmployeeList />} />} />
-          <Route path="/edit-employee/:id" element={<PrivateRoute element={<EditEmployee />} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="app">
+      {isAuthenticated && <Sidebar />}
+      <Routes>
+        {/* Default route directs to login page */}
+        <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <Login />} />
+        <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+        <Route path="/add-employee" element={<PrivateRoute element={<AddEmployee />} />} />
+        <Route path="/employee-list" element={<PrivateRoute element={<EmployeeList />} />} />
+        <Route path="/edit-employee/:id" element={<PrivateRoute element={<EditEmployee />} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </div>
   );
 };
 
