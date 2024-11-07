@@ -27,9 +27,10 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-// Registration route
-app.post("/api/auth/register", async (req, res) => {
-  const { username, password } = req.body;
+app.post('/api/auth/register', (req, res) => {
+    // Registration logic here
+    res.json({ message: 'User registered successfully!' });
+});
 
   try {
     // Check if user already exists
